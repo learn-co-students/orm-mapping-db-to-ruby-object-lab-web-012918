@@ -8,7 +8,6 @@ class Student
   #   @grade = grade
   #   @id = id
   # end
-  @@all = []
 
   def self.new_from_db(row)
     # create a new Student object given a row from the database
@@ -23,8 +22,7 @@ class Student
     # retrieve all the rows from the "Students" database
     # remember each row should be a new instance of the Student class
     students = DB[:conn].execute("SELECT * FROM students")
-    students.each {|student| @@all << self.new_from_db(student)}
-    @@all
+    students.map {|student| self.new_from_db(student)}
   end
 
   def self.find_by_name(name)
